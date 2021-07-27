@@ -1,0 +1,25 @@
+.item {
+  border-radius: 8px;
+  border: 1px solid #bbb;
+  padding: 1rem 1.6rem;
+}
+
+.list {
+  display: grid;
+  width: 100%;
+  max-width: 60rem;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0.5rem;
+}
+
+.name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+.address {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 0.5rem;
+}

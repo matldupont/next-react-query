@@ -1,12 +1,14 @@
-import Link from "next/link";
+import { useRouter } from "next/router";
 import styles from "./Header.module.css";
 
 export function Header({ children }) {
+  const router = useRouter();
   return (
     <div className={styles.header}>
-      <Link href="/">
-        <a className={styles.back}>Back</a>
-      </Link>
+      <button className={styles.back} onClick={() => router.back()}>
+        Back
+      </button>
+
       {children}
     </div>
   );

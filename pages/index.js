@@ -1,9 +1,20 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { useQueryClient } from "react-query";
 import styles from "../styles/Home.module.css";
+import { SSR_PREFETCHING_KEY } from "../src/utils/constants";
+import { getContacts } from "../src/utils/contacts";
 
 export default function Home() {
+  const queryClient = useQueryClient();
+
+  async function onLinkHover() {
+    await queryClient.prefetchQuery(SSR_PREFETCHING_KEY, getContacts, {
+      staleTime: 3000,
+    });
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -24,14 +35,14 @@ export default function Home() {
         <p className={styles.description}>@matldupont</p>
 
         <div className={styles.grid}>
-          <Link href="/client-side-rendering">
+          <Link href="/1-client-side-rendering">
             <a className={styles.card}>
               <h2>Client-side Rendering &rarr;</h2>
               <p>A traditional, client-only Single-Page Application.</p>
             </a>
           </Link>
 
-          <Link href="/server-side-rendering">
+          <Link href="/2-server-side-rendering">
             <a className={styles.card}>
               <h2>Server-side Rendering &rarr;</h2>
               <p>
@@ -40,10 +51,17 @@ export default function Home() {
             </a>
           </Link>
 
-          <Link href="/prefetching">
+          <Link href="/3-ssr-prefetching">
             <a className={styles.card}>
-              <h2>Prefetching with React Query &rarr;</h2>
+              <h2>SSR Prefetching with React Query &rarr;</h2>
               <p>Prefetch on the server to preload react-query cache</p>
+            </a>
+          </Link>
+
+          <Link href="/4-csr-prefetching">
+            <a className={styles.card} onMouseOver={onLinkHover}>
+              <h2>CSR Prefetching with React Query &rarr;</h2>
+              <p>Prefetch on hover to preload react-query cache</p>
             </a>
           </Link>
 
