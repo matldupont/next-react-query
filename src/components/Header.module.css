@@ -1,0 +1,17 @@
+.header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #555;
+  padding: 1rem 0rem;
+
+  border-bottom: 1px solid #bbb;
+}
+
+.back {
+  color: #777;
+  font-size: 1.4rem;
+  margin-right: 3rem;
+}
