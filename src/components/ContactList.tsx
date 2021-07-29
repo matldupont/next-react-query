@@ -5,6 +5,7 @@ const Item = styled.div`
   border-radius: 8px;
   border: 1px solid #bbb;
   padding: 1rem 1.6rem;
+  transition: all 0.3s ease;
 
   ${({ color }) => `
     border-color: ${colorMap[color].border};
