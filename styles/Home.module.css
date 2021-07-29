@@ -70,10 +70,8 @@
 }
 
 .grid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   max-width: 800px;
   margin-top: 3rem;
 }
@@ -88,7 +86,6 @@
   border: 1px solid #aeaeae;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
-  width: 45%;
 }
 
 .card:hover,

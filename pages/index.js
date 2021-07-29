@@ -42,7 +42,14 @@ export default function Home() {
             </a>
           </Link>
 
-          <Link href="/2-server-side-rendering">
+          <Link href="/2-csr-react-query">
+            <a className={styles.card} onMouseOver={onLinkHover}>
+              <h2>CSR with React Query &rarr;</h2>
+              <p>Prefetch on hover to preload react-query cache</p>
+            </a>
+          </Link>
+
+          <Link href="/3-server-side-rendering">
             <a className={styles.card}>
               <h2>Server-side Rendering &rarr;</h2>
               <p>
@@ -51,14 +58,14 @@ export default function Home() {
             </a>
           </Link>
 
-          <Link href="/3-ssr-prefetching">
+          <Link href="/4-ssr-prefetching">
             <a className={styles.card}>
               <h2>SSR Prefetching with React Query &rarr;</h2>
               <p>Prefetch on the server to preload react-query cache</p>
             </a>
           </Link>
 
-          <Link href="/4-csr-prefetching">
+          <Link href="/5-csr-prefetching">
             <a className={styles.card} onMouseOver={onLinkHover}>
               <h2>CSR Prefetching with React Query &rarr;</h2>
               <p>Prefetch on hover to preload react-query cache</p>

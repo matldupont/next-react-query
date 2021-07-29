@@ -8,16 +8,16 @@ import {
   Contact,
   ListContainer,
 } from "../src/components";
-import { SSR_PREFETCHING_KEY } from "../src/utils/constants";
+import { CSR_PREFETCHING_KEY } from "../src/utils/constants";
 import { getContacts } from "../src/utils/contacts";
 
 export default function ClientSideRendering() {
   const {
     data: contacts,
     isLoading,
-    isError,
+
     isSuccess,
-  } = useQuery(SSR_PREFETCHING_KEY, getContacts, { staleTime: 3000 });
+  } = useQuery(CSR_PREFETCHING_KEY, getContacts, { staleTime: 3000 });
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>

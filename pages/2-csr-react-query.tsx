@@ -1,5 +1,5 @@
-import { useQuery, QueryClient } from "react-query";
-import { dehydrate } from "react-query/hydration";
+import * as React from "react";
+import { useQuery } from "react-query";
 import {
   Header,
   Loader,
@@ -7,19 +7,19 @@ import {
   Contact,
   ListContainer,
 } from "../src/components";
-import { PREFETCH_KEY } from "../src/utils/constants";
+import { CSR_REACT_QUERY } from "../src/utils/constants";
 import { getContacts } from "../src/utils/contacts";
 
-export default function Prefetching() {
+export default function ClientSideRendering() {
   const {
     data: contacts,
     isLoading,
     isSuccess,
-  } = useQuery(PREFETCH_KEY, getContacts, { staleTime: 3000 });
+  } = useQuery(CSR_REACT_QUERY, getContacts, { staleTime: 3000 });
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
-      <Header>Prefecting with React Query</Header>
+      <Header>Client Side Rendering</Header>
       <ListContainer>
         {isLoading && <Loader />}
         {isSuccess && (
@@ -32,16 +32,4 @@ export default function Prefetching() {
       </ListContainer>
     </div>
   );
-}
-
-export async function getServerSideProps() {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery(PREFETCH_KEY, getContacts);
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient), // will be passed to the page component as props
-    },
-  };
 }

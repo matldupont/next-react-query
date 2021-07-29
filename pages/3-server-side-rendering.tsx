@@ -17,9 +17,7 @@ export default function ServerSideRendering({ contacts = [] }) {
 }
 
 export async function getServerSideProps() {
-  const contacts = await getContacts();
-
   return {
-    props: { contacts },
+    props: { contacts: await getContacts() },
   };
 }
