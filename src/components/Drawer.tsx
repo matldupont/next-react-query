@@ -65,3 +65,11 @@ export function Drawer({ children }) {
     </DrawerWrapper>
   );
 }
+
+export const DrawerList = styled.ul`
+  font-size: 1.2rem;
+
+  & > li {
+    margin-bottom: 1rem;
+  }
+`;

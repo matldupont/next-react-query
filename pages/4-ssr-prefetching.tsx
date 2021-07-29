@@ -8,36 +8,53 @@ import {
   ListContainer,
   Page,
   Drawer,
+  UserHeading,
+  LoaderBox,
 } from "../src/components";
-import { SSR_PREFETCHING_KEY } from "../src/utils/constants";
-import { getContacts } from "../src/utils/contacts";
+import {
+  SSR_PREFETCH_CONTACTS_KEY,
+  SSR_PREFETCH_USER_KEY,
+} from "../src/utils/constants";
+import { getContacts, getUser } from "../src/utils/contacts";
+import { getNotes } from "../src/utils/notes";
 
 export default function Prefetching() {
   const {
     data: contacts,
-    isLoading,
+    isLoading: isContactsLoading,
     isSuccess,
-  } = useQuery(SSR_PREFETCHING_KEY, getContacts, { staleTime: 3000 });
+    isFetching: isContactsFetching,
+  } = useQuery(SSR_PREFETCH_CONTACTS_KEY, getContacts, {
+    staleTime: 1000,
+    refetchInterval: 3000,
+  });
+
+  const { data: user, isLoading: isUserLoading } = useQuery(
+    SSR_PREFETCH_USER_KEY,
+    getUser
+  );
 
   return (
     <Page>
-      <Header>Prefecting with React Query</Header>
+      <Header>SSR Prefecting with React Query</Header>
       <ListContainer>
-        {isLoading && <Loader />}
+        {isUserLoading ? (
+          <Loader />
+        ) : (
+          <UserHeading>{`${user?.username}'s Address Book - ${user?.email}`}</UserHeading>
+        )}
+        <LoaderBox>
+          {(isContactsLoading || isContactsFetching) && <Loader />}
+        </LoaderBox>
         {isSuccess && (
           <ContactList>
             {contacts.map((contact) => (
-              <Contact key={contact.uuid} contact={contact} color="purple" />
+              <Contact key={contact.uuid} contact={contact} color="blue" />
             ))}
           </ContactList>
         )}
       </ListContainer>
-      <Drawer>
-        <h2>SSR Prefecting with React Query</h2>
-        <ul>
-          <li>Strictly client-side</li>
-        </ul>
-      </Drawer>
+      {getNotes("ssr-prefetch")}
     </Page>
   );
 }
@@ -45,7 +62,8 @@ export default function Prefetching() {
 export async function getServerSideProps() {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(SSR_PREFETCHING_KEY, getContacts);
+  await queryClient.prefetchQuery(SSR_PREFETCH_CONTACTS_KEY, getContacts);
+  await queryClient.prefetchQuery(SSR_PREFETCH_USER_KEY, getUser);
 
   return {
     props: {

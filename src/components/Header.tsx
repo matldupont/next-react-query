@@ -40,7 +40,7 @@ export function Header({ children }) {
   return (
     <HeaderWrapper>
       <HeaderContent>
-        <BackButton onClick={() => router.back()}>Back</BackButton>
+        <BackButton onClick={() => router.back()}>Home</BackButton>
         {children}
       </HeaderContent>
     </HeaderWrapper>

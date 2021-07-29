@@ -7,3 +7,8 @@ export async function getContacts() {
   const result = await fetch(`${host}/api/contacts`);
   return await result.json();
 }
+
+export async function getUser() {
+  const result = await fetch(`${host}/api/user`);
+  return await result.json();
+}

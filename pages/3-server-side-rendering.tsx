@@ -5,32 +5,30 @@ import {
   ListContainer,
   Page,
   Drawer,
+  UserHeading,
 } from "../src/components";
-import { getContacts } from "../src/utils/contacts";
+import { getContacts, getUser } from "../src/utils/contacts";
+import { getNotes } from "../src/utils/notes";
 
-export default function ServerSideRendering({ contacts = [] }) {
+export default function ServerSideRendering({ contacts = [], user = null }) {
   return (
     <Page>
       <Header>Server Side Rendering</Header>
       <ListContainer>
+        <UserHeading>{`${user?.username}'s Address Book - ${user?.email}`}</UserHeading>
         <ContactList>
           {contacts.map((contact) => (
             <Contact key={contact.uuid} contact={contact} color="orange" />
           ))}
         </ContactList>
       </ListContainer>
-      <Drawer>
-        <h2>Server Side Rendering</h2>
-        <ul>
-          <li>Strictly client-side</li>
-        </ul>
-      </Drawer>
+      {getNotes("ssr")}
     </Page>
   );
 }
 
 export async function getServerSideProps() {
   return {
-    props: { contacts: await getContacts() },
+    props: { contacts: await getContacts(), user: await getUser() },
   };
 }

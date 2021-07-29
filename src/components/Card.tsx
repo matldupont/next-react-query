@@ -24,10 +24,10 @@ const Anchor = styled.a`
   `};
 `;
 
-export function Card({ children, href, onMouseOver, color, onClick }) {
+export function Card({ children, href, onMouseEnter, color, onClick }) {
   return (
     <Link href={href}>
-      <Anchor color={color} onMouseOver={onMouseOver} onClick={onClick}>
+      <Anchor color={color} onMouseEnter={onMouseEnter} onClick={onClick}>
         {children}
       </Anchor>
     </Link>

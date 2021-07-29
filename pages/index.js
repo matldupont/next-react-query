@@ -1,12 +1,16 @@
 import * as React from "react";
 import Head from "next/head";
+import Link from "next/link";
 import Image from "next/image";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 import { useQueryClient } from "react-query";
 import styles from "../styles/Home.module.css";
-import { SSR_PREFETCHING_KEY } from "../src/utils/constants";
-import { getContacts } from "../src/utils/contacts";
+import {
+  CSR_PREFETCH_CONTACTS_KEY,
+  CSR_PREFETCH_USER_KEY,
+} from "../src/utils/constants";
+import { getContacts, getUser } from "../src/utils/contacts";
 import headshot from "../public/mat.dupont.headshot.jpg";
 import { Page, Card } from "../src/components";
 
@@ -42,9 +46,7 @@ export default function Home() {
   const [isWaiting, setIsWaiting] = React.useState(false);
 
   async function onLinkHover() {
-    await queryClient.prefetchQuery(SSR_PREFETCHING_KEY, getContacts, {
-      staleTime: 3000,
-    });
+    queryClient.prefetchQuery(CSR_PREFETCH_CONTACTS_KEY, getContacts);
   }
 
   return (
@@ -59,13 +61,17 @@ export default function Home() {
             {isWaiting ? (
               <WaitingIcon>🤬</WaitingIcon>
             ) : (
-              <Image
-                src={headshot}
-                alt="Vercel Logo"
-                height={100}
-                width={100}
-                quality={100}
-              />
+              <Link href="/me">
+                <a>
+                  <Image
+                    src={headshot}
+                    alt="Vercel Logo"
+                    height={100}
+                    width={100}
+                    quality={100}
+                  />
+                </a>
+              </Link>
             )}
           </AnimatePresence>
         </HeadshotWrapper>
@@ -123,7 +129,7 @@ export default function Home() {
 
           <Card
             href="/5-csr-prefetching"
-            onMouseOver={onLinkHover}
+            onMouseEnter={onLinkHover}
             color="green"
             onClick={() => setIsWaiting(true)}
           >

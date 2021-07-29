@@ -5,3 +5,4 @@ export * from "./ContactList";
 export * from "./Container";
 export * from "./Loader";
 export * from "./Page";
+export * from "./UserHeading";

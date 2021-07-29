@@ -6,32 +6,50 @@ import {
   Contact,
   ListContainer,
   Page,
-  Drawer,
+  UserHeading,
 } from "../src/components";
 
-import { getContacts } from "../src/utils/contacts";
+import { getContacts, getUser } from "../src/utils/contacts";
+import { getNotes } from "../src/utils/notes";
 
 export default function ClientSideRendering() {
   const [contacts, setContacts] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [user, setUser] = React.useState(null);
+  const [isContactsLoading, setIsContactsLoading] = React.useState(false);
+  const [isUserLoading, setIsUserLoading] = React.useState(false);
 
   async function loadContacts() {
-    setIsLoading(true);
+    setIsContactsLoading(true);
     const resContacts = await getContacts();
     setContacts(resContacts);
-    setIsLoading(false);
+    setIsContactsLoading(false);
+  }
+
+  async function loadUser() {
+    setIsUserLoading(true);
+    const resUser = await getUser();
+    setUser(resUser);
+    setIsUserLoading(false);
   }
 
   React.useEffect(() => {
     loadContacts();
+    loadUser();
   }, []);
 
   return (
     <Page>
       <Header>Client Side Rendering</Header>
       <ListContainer>
-        {isLoading && <Loader />}
-        {!isLoading && (
+        {isUserLoading ? (
+          <Loader />
+        ) : (
+          <UserHeading>{`${user?.username}'s Address Book - ${user?.email}`}</UserHeading>
+        )}
+
+        {isContactsLoading ? (
+          <Loader />
+        ) : (
           <ContactList>
             {contacts.map((contact) => (
               <Contact key={contact.uuid} contact={contact} color="red" />
@@ -39,12 +57,7 @@ export default function ClientSideRendering() {
           </ContactList>
         )}
       </ListContainer>
-      <Drawer>
-        <h2>Client Side Rendering</h2>
-        <ul>
-          <li>Strictly client-side</li>
-        </ul>
-      </Drawer>
+      {getNotes("csr")}
     </Page>
   );
 }

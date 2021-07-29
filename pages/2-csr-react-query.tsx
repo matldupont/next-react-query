@@ -1,29 +1,48 @@
 import * as React from "react";
+import styled from "styled-components";
 import { useQuery } from "react-query";
 import {
   Header,
   Loader,
+  LoaderBox,
   ContactList,
   Contact,
   ListContainer,
   Page,
-  Drawer,
+  UserHeading,
 } from "../src/components";
-import { CSR_REACT_QUERY } from "../src/utils/constants";
-import { getContacts } from "../src/utils/contacts";
+import { CSR_RQ_CONTACTS_KEY, CSR_RQ_USER_KEY } from "../src/utils/constants";
+import { getContacts, getUser } from "../src/utils/contacts";
+import { getNotes } from "../src/utils/notes";
 
 export default function ClientSideRendering() {
   const {
     data: contacts,
-    isLoading,
+    isLoading: isContactsLoading,
     isSuccess,
-  } = useQuery(CSR_REACT_QUERY, getContacts, { staleTime: 3000 });
+    isFetching: isContactsFetching,
+  } = useQuery(CSR_RQ_CONTACTS_KEY, getContacts, {
+    staleTime: 1000,
+    refetchInterval: 3000,
+  });
+
+  const { data: user, isLoading: isUserLoading } = useQuery(
+    CSR_RQ_USER_KEY,
+    getUser
+  );
 
   return (
     <Page>
       <Header>Client Side Rendering with React Query</Header>
       <ListContainer>
-        {isLoading && <Loader />}
+        {isUserLoading ? (
+          <Loader />
+        ) : (
+          <UserHeading>{`${user?.username}'s Address Book - ${user?.email}`}</UserHeading>
+        )}
+        <LoaderBox>
+          {(isContactsLoading || isContactsFetching) && <Loader />}
+        </LoaderBox>
         {isSuccess && (
           <ContactList>
             {contacts.map((contact) => (
@@ -32,12 +51,7 @@ export default function ClientSideRendering() {
           </ContactList>
         )}
       </ListContainer>
-      <Drawer>
-        <h2>Client Side Rendering with React Query</h2>
-        <ul>
-          <li>Strictly client-side</li>
-        </ul>
-      </Drawer>
+      {getNotes("csr-rq")}
     </Page>
   );
 }
