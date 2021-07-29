@@ -5,7 +5,10 @@ import {
   ContactList,
   Contact,
   ListContainer,
+  Page,
+  Drawer,
 } from "../src/components";
+
 import { getContacts } from "../src/utils/contacts";
 
 export default function ClientSideRendering() {
@@ -24,18 +27,24 @@ export default function ClientSideRendering() {
   }, []);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+    <Page>
       <Header>Client Side Rendering</Header>
       <ListContainer>
         {isLoading && <Loader />}
         {!isLoading && (
           <ContactList>
             {contacts.map((contact) => (
-              <Contact key={contact.uuid} contact={contact} />
+              <Contact key={contact.uuid} contact={contact} color="red" />
             ))}
           </ContactList>
         )}
       </ListContainer>
-    </div>
+      <Drawer>
+        <h2>Client Side Rendering</h2>
+        <ul>
+          <li>Strictly client-side</li>
+        </ul>
+      </Drawer>
+    </Page>
   );
 }
