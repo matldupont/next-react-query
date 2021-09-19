@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React from "react";
 import { MDXProvider } from "@mdx-js/react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -32,7 +33,8 @@ const mdComponents = {
   motion,
 };
 
-export default ({ children }) => {
-  console.log("MDX PRovider");
-  return <MDXProvider components={mdComponents}>{children}</MDXProvider>;
-};
+const Provider = ({ children }) => (
+  <MDXProvider components={mdComponents}>{children}</MDXProvider>
+);
+
+export default Provider;

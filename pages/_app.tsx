@@ -23,8 +23,6 @@ function MyApp({ Component, pageProps }) {
     queryClientRef.current = new QueryClient();
   }
 
-  console.log("APP");
-
   return (
     <MDXProvider>
       <ThemeProvider theme={theme}>
