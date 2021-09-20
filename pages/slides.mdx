@@ -115,11 +115,13 @@ Think of the client as the cache/store/whatever
 ## The `useQuery()` hook
 
 ```js
-const query = useQuery("todos", getTodos);
+const query = useQuery("todos", getTodos, options);
 ```
 
 1. Cache key
 2. Function **returning** a Promise
+
+\*More on options later
 
 ---
 
@@ -153,7 +155,10 @@ const { isLoading, isError, data, error } = useQuery("todos", getTodos);
 ## The `useMutation()` hook
 
 ```js
-const mutation = useMutation((newTodo) => axios.post("/todos", newTodo));
+const mutation = useMutation(
+  (newTodo) => axios.post("/todos", newTodo),
+  options
+);
 ```
 
 1. Function **returning** a Promise
