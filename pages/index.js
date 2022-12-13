@@ -14,6 +14,8 @@ import { getContacts, getUser } from "../src/utils/contacts";
 import headshot from "../public/mat.dupont.headshot.jpg";
 import { Page, Card } from "../src/components";
 
+import * as s from "./index.module.css";
+
 const Header = styled.header`
   width: 100vw;
   display: flex;
@@ -62,15 +64,13 @@ export default function Home() {
               <WaitingIcon>🤬</WaitingIcon>
             ) : (
               <Link href="/me">
-                <a>
-                  <Image
-                    src={headshot}
-                    alt="Vercel Logo"
-                    height={100}
-                    width={100}
-                    quality={100}
-                  />
-                </a>
+                <Image
+                  src={headshot}
+                  alt="Vercel Logo"
+                  height={100}
+                  width={100}
+                  quality={100}
+                />
               </Link>
             )}
           </AnimatePresence>

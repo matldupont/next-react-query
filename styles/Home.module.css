@@ -8,6 +8,15 @@
   height: 100vh;
 }
 
+.header {
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 4rem;
+  min-height: 110px;
+}
+
 .main {
   padding: 0rem 0 5rem;
   flex: 1;

@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/link-passhref */
 import Link from "next/link";
 import styled from "styled-components";
 import { colorMap } from "../utils/colors";
+import styles from "./Card.module.css";
 
 const Anchor = styled.a`
   background-color: #fafafa;
@@ -25,11 +25,19 @@ const Anchor = styled.a`
 `;
 
 export function Card({ children, href, onMouseEnter, color, onClick }) {
+  const getColorStyles = () => ({
+    borderColor: colorMap[color].border,
+    backgroundColor: colorMap[color].background,
+  });
   return (
-    <Link href={href}>
-      <Anchor color={color} onMouseEnter={onMouseEnter} onClick={onClick}>
-        {children}
-      </Anchor>
+    <Link
+      href={href}
+      className={styles.link}
+      onMouseEnter={onMouseEnter}
+      onClick={onClick}
+      style={getColorStyles()}
+    >
+      {children}
     </Link>
   );
 }
